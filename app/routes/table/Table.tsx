@@ -3,18 +3,14 @@ import {
     Table,
     Thead,
     Tbody,
-    Tfoot,
     Tr,
     Th,
     Td,
-    TableCaption,
-    TableContainer,
     Input,
   } from '@chakra-ui/react'
-import _ from 'lodash';
 import Pagination from './Pagination';
-import { Column, Row } from '.';
 import { filterRows, paginateRows, sortRows } from './tableHelpers';
+import type { Column, Row } from '.';
 
 type props = {
     rows: Row[];
@@ -24,7 +20,7 @@ type props = {
 const TableComponent = ({rows, columns}: props) => {
 
     const [activePage, setActivePage] = useState(1)
-    const [filters, setFilters] = useState({})
+    const [filters, setFilters] = useState<{[key: string]: string | number}>({})
     const [sort, setSort] = useState({ order: 'asc', orderBy: 'id' })
     const rowsPerPage = 3
 
@@ -35,7 +31,7 @@ const TableComponent = ({rows, columns}: props) => {
     const count = filteredRows.length
     const totalPages = Math.ceil(count / rowsPerPage)
 
-    const handleSearch = (value, accessor) => {
+    const handleSearch = (value: string | number, accessor: string) => {
         setActivePage(1)
     
         if (value) {
@@ -53,7 +49,7 @@ const TableComponent = ({rows, columns}: props) => {
         }
       }
     
-      const handleSort = (accessor) => {
+      const handleSort = (accessor: string) => {
         setActivePage(1)
         setSort((prevSort) => ({
           order: prevSort.order === 'asc' && prevSort.orderBy === accessor ? 'desc' : 'asc',
@@ -109,9 +105,9 @@ const TableComponent = ({rows, columns}: props) => {
                     <Tr key={row.id}>
                     {columns.map(column => {
                         if (column.format) {
-                        return <Td key={column.accessor}>{column.format(row[column.accessor])}</Td>
+                        return <Td key={column.accessor}>{column.format(row[column.accessor as keyof Row])}</Td>
                         }
-                        return <Td key={column.accessor}>{row[column.accessor]}</Td>
+                        return <Td key={column.accessor}>{row[column.accessor as keyof Row]}</Td>
                     })}
                     </Tr>
                 )
