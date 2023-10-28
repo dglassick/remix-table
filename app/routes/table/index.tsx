@@ -1,41 +1,46 @@
 import TableComponent from './Table';
-
-export type Row = {
-id: number;
-name: string  | null;
-age: number | null;
-is_manager: boolean  | null;
-start_date: string  | null;
-}
+import { PLAYER_DATA } from './data';
 
 export type Column = {
     accessor: string;
     label: string;
-    format?: (value: any) => "✔️" | "✖️";
+    format?: (value: any) => any;
 }
 
-const rows: Row[] = [
-    { id: 1, name: 'Liz Lemon', age: 36, is_manager: true, start_date: '02-28-1999' },
-    { id: 2, name: 'Jack Donaghy', age: 40, is_manager: true, start_date: '03-05-1997' },
-    { id: 3, name: 'Tracy Morgan', age: 39, is_manager: false, start_date: '07-12-2002' },
-    { id: 4, name: 'Jenna Maroney', age: 40, is_manager: false, start_date: '02-28-1999' },
-    { id: 5, name: 'Kenneth Parcell', age: Infinity, is_manager: false, start_date: '01-01-1970' },
-    { id: 6, name: 'Pete Hornberger', age: null, is_manager: true, start_date: '04-01-2000' },
-    { id: 7, name: 'Frank Rossitano', age: 36, is_manager: false, start_date: null },
-    { id: 8, name: null, age: null, is_manager: null, start_date: null },
+const columns: Column[] = [
+    { accessor: 'first_name', label: 'First Name' },
+    { accessor: 'last_name', label: 'Last Name' },
+    { accessor: 'positions', label: 'Position' },
+    { accessor: 'email', label: 'Email' },
+    { accessor: 'phone', label: 'Phone' },
+    { accessor: 'goals_scored', label: 'Goals Scored' },
+    { accessor: 'assists', label: 'Assists' },
+    { accessor: 'minutes_played', label: 'Minutes Played' },
+    { accessor: 'shots_on_goal', label: 'Shots On Goal' },
+    { accessor: 'shots_off_target', label: 'Shots Off Target' },
+    { accessor: 'pass_completion_percent', label: 'Pass Completion %', format: value => `${value * 100}%` },
+    { accessor: 'tackles', label: 'Tackles' },
+    { accessor: 'interceptions', label: 'Interceptions' },
+    { accessor: 'fouls_committed', label: 'Fouls Committed' },
+    { accessor: 'fouls_received', label: 'Fouls Received' },
+    { accessor: 'yellow_cards', label: 'Yellow Cards' },
+    { accessor: 'red_cards', label: 'Red Cards' },
+    { accessor: 'saves', label: 'Saves' },
+    { accessor: 'clean_sheets', label: 'Clean Sheets' },
+    { accessor: 'height', label: 'Height' },
+    { accessor: 'weight', label: 'Weight' },
+    { accessor: 'distance_covered', label: 'Distance Covered (km)' },
+    { accessor: 'speed_forty_yards', label: 'Forty Yard Dash' },
+    { accessor: 'endurance_beep_test', label: 'Beep Test' },
+    { accessor: 'strength_bench_press', label: 'Bench Press' },
+    { accessor: 'notes', label: 'Notes' },
 ]
 
-const columns: Column[] = [
-    { accessor: 'name', label: 'Name' },
-    { accessor: 'age', label: 'Age' },
-    { accessor: 'is_manager', label: 'Manager', format: value => (value ? '✔️' : '✖️') },
-    { accessor: 'start_date', label: 'Start Date' },
-]
 const Table = () => {
-    
+
     return (
-        <TableComponent rows={rows} columns={columns} />
-      )
+        <TableComponent rows={PLAYER_DATA} columns={columns} />
+    )
 }
 
 export default Table;
